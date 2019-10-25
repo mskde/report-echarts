@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title></title>
+<!-- Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="vendor/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<!-- Page level plugin CSS-->
+<link href="vendor/datatables/dataTables.bootstrap4.css"
+	rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap-table.min.css">
+
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+		id="mainNav">
+		<a class="navbar-brand" href="index.html">员工信息</a>
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navbarResponsive"
+			aria-controls="navbarResponsive" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+
+			<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
+				<li class="nav-item" data-toggle="tooltip" data-placement="right"
+					title="Tables"><a class="nav-link" href="tables.html"> <i
+						class="fa fa-fw fa-table"></i> <span class="nav-link-text">Tables</span>
+				</a></li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right"
+					title="Charts"><a class="nav-link" href="chart1.html"> <i
+						class="fa fa-fw fa-area-chart"></i> <span class="nav-link-text">Charts</span>
+				</a></li>
+
+			</ul>
+
+			<ul class="navbar-nav sidenav-toggler">
+				<li class="nav-item"><a class="nav-link text-center"
+					id="sidenavToggler"> <i class="fa fa-fw fa-angle-left"></i>
+				</a></li>
+			</ul>
+
+			<ul class="navbar-nav ml-auto">
+
+			</ul>
+
+		</div>
+
+	</nav>
+	<div class="content-wrapper">
+		<div class="container-fluid">
+
+			<!-- Example DataTables Card-->
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-table"></i> Data Table Example
+				</div>
+				<div class="card-body">
+				
+				
+				
+				
+					<div class="col-sm-3">
+	                    <input type="text" id="search_id" class="form-control" placeholder="请输入搜索内容"/>
+	                </div>
+	                <div class="col-sm-1">
+	                    <button type="button" class="btn btn-primary btn-w-m" id="queryBtn">
+	                        <span class="glyphicon glyphicon-search"></span> 搜索
+	                    </button>
+	                </div>
+					
+					
+					<table id="table_sysUser"></table> 
+					
+					
+					
+				</div>
+				<div class="card-footer small text-muted"></div>
+			</div>
+		</div>
+		<!-- /.container-fluid-->
+		<!-- /.content-wrapper-->
+		<footer class="sticky-footer">
+			<div class="container">
+				<div class="text-center"></div>
+			</div>
+		</footer>
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top"> <i
+			class="fa fa-angle-up"></i>
+		</a>
+		<!-- Logout Modal-->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to
+							Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are
+						ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button"
+							data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="login.html">Logout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-table.min.js"></script>
+<script src="js/bootstrap-table-zh-CN.min.js"></script>
+		<script>
+
+		$(document).ready(function() { 
+			  //初始化Table 
+			  var test="getAllEmp.do";
+			  var oTable = new TableInit(test); 
+			  oTable.Init(); 
+			}); 
+
+			
+			$("#queryBtn").click(function(){
+				$('#table_sysUser').bootstrapTable('destroy');
+				var test="getEmpByAnyLine.do?test="+$("#search_id").val()
+				var oTable = new TableInit(test); 
+				 oTable.Init(); 
+				console.log(test)
+			})
+			
+
+		
+			var TableInit = function (test) { 
+			  var oTableInit = new Object(); 
+			  //初始化Table 
+			  oTableInit.Init = function () { 
+			    $('#table_sysUser').bootstrapTable({ 
+			      url: test,     //请求后台的URL（*） 
+			      method: 'post',           //请求方式（*） 
+			      toolbar: '#toolbar',        //工具按钮用哪个容器 
+			      striped: true,           //是否显示行间隔色 
+			      cache: false,            //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*） 
+			      pagination: true,          //是否显示分页（*） 
+			      sortable: true,           //是否启用排序 
+			      sortName:"id", 
+			      sortOrder: "asc",          //排序方式 
+			      queryParamsType: 'limit', 
+			      sidePagination: "client",      //分页方式：client客户端分页，server服务端分页（*） 
+			      pageNumber:1,            //初始化加载第一页，默认第一页 
+			      pageSize: 10,            //每页的记录行数（*） 
+			      pageList: [10, 15, 20, 50],    //可供选择的每页的行数（*） 
+			      /* showColumns: true,         //是否显示所有的列 
+			      minimumCountColumns: 2,       //最少允许的列数  */
+			      uniqueId: "id",           //每一行的唯一标识，一般为主键列 
+			      
+			      contentType: "application/x-www-form-urlencoded", //解决POST提交问题 
+			      columns: [ 
+			         
+			      {title:'ID',field: 'id',sortable:true }, 
+			      {title:'员工编号',field: 'empno',sortable:true}, 
+			      {title:'员工姓名',field: 'ename',sortable:true }, 
+			      {title:'职位',field: 'job',sortable:true }, 
+			      {title:'入职日期',field: 'hiredate',sortable:true }, 
+			      {title:'薪资',field: 'sal',sortable:true }, 
+			      {title:'奖金',field: 'comm',sortable:true}, 
+			      {title:'部门编号',field: 'deptno',sortable:true}, 
+			      {title:'性别',field: 'sex',sortable:true }, 
+			      {title:'年龄',field: 'age',sortable:true }, 
+			      ] 
+			    }); 
+			  }; 
+
+			  return oTableInit; 
+			}; 
+
+		</script>
+	</div>
+</body>
+
+</html>

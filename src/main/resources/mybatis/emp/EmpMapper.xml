@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EmpMapper">
+
+	<insert id="addEmp" parameterType="com.report.domain.Emp">
+		insert into
+		emp(
+		id
+		,empno
+		<if test="ename !=null and ename !=''">
+			,ename
+		</if>
+		<if test="job !=null and job !=''">
+			,job
+		</if>
+		<if test="hiredate !=null and hiredate !=''">
+			,hiredate
+		</if>
+		<if test="sal !=null and sal !=''">
+			,sal
+		</if>
+		<if test="comm !=null and comm !=''">
+			,comm
+		</if>
+		<if test="deptno !=null and deptno !=''">
+			,deptno
+		</if>
+		<if test="sex !=null and sex !=''">
+			,sex
+		</if>
+		<if test="age !=null and age !=''">
+			,age
+		</if>
+		)
+		values(
+		#{id}
+		,#{empno}
+		<if test="ename !=null and ename !=''">
+			,#{ename}
+		</if>
+		<if test="job !=null and job !=''">
+			,#{job}
+		</if>
+		<if test="hiredate !=null and hiredate !=''">
+			,#{hiredate}
+		</if>
+		<if test="sal !=null and sal !=''">
+			,#{sal}
+		</if>
+		<if test="comm !=null and comm !=''">
+			,#{comm}
+		</if>
+		<if test="deptno !=null and deptno !=''">
+			,#{deptno}
+		</if>
+		<if test="sex !=null and sex !=''">
+			,#{sex}
+		</if>
+		<if test="age !=null and age !=''">
+			,#{age}
+		</if>
+		)
+	</insert>
+
+	<delete id="delEmpByEmpno" parameterType="java.lang.Integer">
+		delete from emp
+		where
+		empno=#{empno}
+	</delete>
+
+	<update id="updEmp" parameterType="com.report.domain.Emp">
+		update emp
+		<set>
+			id=#{id}
+			,empno=#{empno}
+			<if test="ename != null and ename != '' ">
+				,ename=#{ename}
+			</if>
+			<if test="job != null and job != '' ">
+				,job=#{job}
+			</if>
+			<if test="hiredate != null and hiredate != '' ">
+				,hiredate=#{hiredate}
+			</if>
+			<if test="sal != null and sal != '' ">
+				,sal=#{sal}
+			</if>
+			<if test="comm != null and comm != '' ">
+				,comm=#{comm}
+			</if>
+			<if test="deptno != null and deptno != '' ">
+				,deptno=#{deptno}
+			</if>
+			<if test="sex != null and sex != '' ">
+				,sex=#{sex}
+			</if>
+			<if test="age != null and age != '' ">
+				,age=#{age}
+			</if>
+		</set>
+		where empno=#{empno}
+
+	</update>
+
+	<select id="getAllEmp" resultType="com.report.domain.Emp">
+		select *
+		from emp
+	</select>
+	<select id="getEmpByAnyLine" parameterType="String" resultType="com.report.domain.Emp">
+		<bind name="test" value="'%'+_parameter+'%'"/>
+		SELECT *
+		from emp
+		where 
+		
+		ID like  #{test}
+		or EMPNO LIKE  #{test}
+		or ENAME LIKE  #{test}
+		or JOB LIKE  #{test}
+		or HIREDATE  LIKE #{test}
+		or COMM LIKE  #{test}
+		or SAL LIKE  #{test}
+		or DEPTNO LIKE  #{test}
+		or AGE LIKE  #{test}
+		or SEX LIKE  #{test}
+	</select>
+		
+
+
+
+	<select id="getAgeAndSal" resultType="Map">
+		select AGE,avg(SAL)
+		from emp
+		GROUP BY AGE
+	</select>
+
+	<resultMap type="com.report.vo.AgeAndSal" id="testMap">
+		<id property="age" column="AGE" />
+		<result property="sal" column="avg(SAL)" />
+	</resultMap>
+	<select id="getAgeAndSal2" resultMap="testMap">
+		select AGE,avg(SAL)
+		from emp
+		GROUP BY AGE
+	</select>
+
+
+	<select id="getSexNum" resultType="Map">
+		select sex,COUNT(EMPNO)as x
+		from
+		emp
+		GROUP BY SEX
+	</select>
+
+	<select id="getSalSumByDept" resultType="Map">
+		SELECT DNAME,SUM(sal)
+		from emp right join dept
+		on  emp.DEPTNO=dept.DEPTNO
+		GROUP BY DNAME
+	</select>
+	<select id="getNumByDept" resultType="Map">
+		SELECT DNAME,count(empno)
+		from emp,dept
+		where emp.DEPTNO=dept.DEPTNO
+		GROUP BY DNAME
+	</select>
+	<select id="getIdAndYear" resultType="Map">
+		SELECT id,year(HIREDATE)
+		from emp
+		
+	</select>
+
+
+</mapper>

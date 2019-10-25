@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title></title>
+<!-- Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="vendor/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+		id="mainNav">
+		<a class="navbar-brand" href="index.html">员工信息</a>
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navbarResponsive"
+			aria-controls="navbarResponsive" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+
+			<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
+				<li class="nav-item" data-toggle="tooltip" data-placement="right"
+					title="Tables"><a class="nav-link" href="tables.html"> <i
+						class="fa fa-fw fa-table"></i> <span class="nav-link-text">Tables</span>
+				</a></li>
+					<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+						<a class="nav-link" href="chart1.html">
+							<i class="fa fa-fw fa-area-chart"></i>
+							<span class="nav-link-text">Charts</span>
+						</a>
+					</li>
+
+
+			</ul>
+
+			<ul class="navbar-nav sidenav-toggler">
+				<li class="nav-item"><a class="nav-link text-center"
+					id="sidenavToggler"> <i class="fa fa-fw fa-angle-left"></i>
+				</a></li>
+			</ul>
+
+			<ul class="navbar-nav ml-auto">
+
+			</ul>
+
+		</div>
+
+	</nav>
+
+	<div class="content-wrapper">
+		<a class="btn btn-info" href="chart1.html" >年龄-薪资折线趋势图</a>
+		<a class="btn btn-info" href="chart2.html" >人员-性别饼状比例图</a>
+		<a class="btn btn-info" href="chart3.html" >部门-总薪资雷达分布图</a>
+		<a class="btn btn-info" href="chart4.html" >人员-入职年份散点分布图</a>
+		<a class="btn btn-info" href="chart5.html" >人员-部门人数柱状图</a>
+		<div class="container-fluid">
+
+			<!-- Area Chart Example-->
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-area-chart"></i> 人员-性别饼状比例图
+					<input class="btn btn-success" type="button" value="刷新" id="refresh">
+				</div>
+				<div class="card-body">
+				
+				
+					<a class="btn btn-primary octoolbox" href="#" >关闭工具栏</a>  
+					<div class="btn-group">
+						<a class="btn dropdown-toggle btn-primary" data-toggle="dropdown"
+							href="#"> 标题大小 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class="cgtilsiz" style="background: #F0F0F0" value="10">小号</li>
+							<li class="cgtilsiz" style="background: #FFFFFF" value="15">较小</li>
+							<li class="cgtilsiz" style="background: #F0F0F0" value="20">中号</li>
+							<li class="cgtilsiz" style="background: #FFFFFF" value="25">较大</li>
+							<li class="cgtilsiz" style="background: #F0F0F0" value="30">大号</li>
+						</ul>
+					</div>
+					<div class="btn-group">
+						<a class="btn dropdown-toggle btn-primary" data-toggle="dropdown"
+							href="#"> 标题颜色 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class="cgtilclo" style="background: #000000" value="#000000">默认</li>
+							<li class="cgtilclo" style="background: #2E8B57" value="#2E8B57">藻绿</li>
+							<li class="cgtilclo" style="background: #6A5ACD" value="#6A5ACD">青蓝</li>
+							<li class="cgtilclo" style="background: #BC8F8F" value="#BC8F8F">玫褐</li>
+							<li class="cgtilclo" style="background: #FF0000" value="#FF0000">明红</li>
+							<li class="cgtilclo" style="background: #F5F5DC" value="#F5F5DC">米黄</li>
+							<li class="cgtilclo" style="background: #F5F5F5" value="#F5F5F5">雾白</li>
+						</ul>
+					</div>
+
+					<div id="echarts_demo"
+						style="width: 100%; height: 400px; border: solid 1px;"></div>
+				</div>
+
+				<div class="card-footer small text-muted"></div>
+			</div>
+
+		</div>
+		<!-- /.container-fluid-->
+		<!-- /.content-wrapper-->
+		<footer class="sticky-footer">
+			<div class="container">
+				<div class="text-center"></div>
+			</div>
+		</footer>
+
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- echarts-->
+		<script src="vendor/echarts/echarts.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin.js"></script>
+	</div>
+
+	<script>
+	option = {
+			title : {
+				text : '员工男女比例',
+				x : 'center',
+				textStyle : {
+				    color: "black",
+				    fontSize:20 
+				} 
+			},
+			color:['#B6A2DE','#2EC7C9'],
+			tooltip : {
+				trigger : 'item',
+				formatter : "{a} <br/>{b} : {c} ({d}%)"
+			},
+			legend : {
+				orient : 'vertical',
+				x : 'left',
+				data : []
+			},
+			toolbox : {
+				show : true,
+				feature : {
+					mark : {
+						show : true
+					},
+					dataView : {
+						show : true,
+						readOnly : false
+					},
+					magicType : {
+						show : true,
+						type : [ 'pie', 'funnel' ],
+						option : {
+							funnel : {
+								x : '25%',
+								width : '50%',
+								funnelAlign : 'left',
+								max : 1548
+							}
+						}
+					},
+					restore : {
+						show : true
+					},
+					saveAsImage : {
+						show : true
+					}
+				}
+			},
+			calculable : true,
+			series : [ {
+				name : '男女比例',
+				type : 'pie',
+				radius : '55%',
+				center : [ '50%', '60%' ],
+				data : []
+			} ]
+		};
+		
+	//初始化
+	$(document).ready(function() {
+		getSexNum();
+	})
+	//刷新按钮
+	$("#refresh").click(function() {
+		getSexNum();
+	})
+	
+		//设置工具栏
+		$(".octoolbox").click(function(){
+			if(option['toolbox'].show==false){
+				option['toolbox'].show=true;
+				$(this).text("关闭工具栏")
+			}else{
+				option['toolbox'].show=false;
+				$(this).text("打开工具栏")
+			}
+			executeChart()
+		})
+
+		//设置标题颜色
+		$(".cgtilclo").click(function(){
+			option['title']['textStyle']['color']=$(this).attr("value")
+			executeChart()
+		})
+		//设置标题大小
+		$(".cgtilsiz").click(function(){
+			option['title']['textStyle']['fontSize']=$(this).attr("value")
+			executeChart()
+		})
+
+		//获取数据，执行表格文件
+		function getSexNum() {
+			$.ajax({
+				type : "post",
+				url : "getSexNum.do",
+				success : function(data) {
+					console.log(data)
+					handleData(data)
+					executeChart()
+				},
+				error : function(e) {
+					alert("联网失败");
+					console.log(e);
+					
+				}
+			})
+		}
+		//处理数据
+		function handleData(data) {
+			var legend_data = new Array(data.length);
+			for (var i = 0; i < data.length; i++) {
+				legend_data[i] = data[i]["sex"];
+			}
+			for (let i = 0; i < data.length; i++) {
+				data[i].value = data[i].x;
+				delete data[i].x;
+				data[i].name = data[i].sex;
+				delete data[i].sex;
+			}
+			option["legend"]["data"]=legend_data;
+			option["series"][0]["data"]=data;
+		}
+		
+		//执行表格
+		function executeChart(){
+			var myEcharts = echarts.init(document.getElementById('echarts_demo'));
+			myEcharts.setOption(option)
+		}
+	</script>
+</body>
+
+</html>
