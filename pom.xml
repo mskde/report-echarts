@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
   <!-- 这里覆盖txt里拷贝的内容 -->
 	<properties>
-		<srping.version>4.0.4.RELEASE</srping.version>
+		<srping.version>6.0.0</srping.version>
 		<mybatis.version>3.2.1</mybatis.version>
 		<slf4j.version>1.7.9</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
